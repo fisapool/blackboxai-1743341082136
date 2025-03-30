@@ -1,4 +1,3 @@
-json
 {
   "name": "FISAQuilbot Premium",
   "version": "2.0.0",
@@ -72,4 +71,5 @@ json
       "path": "rules/blocked_resources.json"
     }]
   }
+}
 }
