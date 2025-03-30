@@ -3,53 +3,68 @@
  * UI enhancements for chat.openai.com
  */
 
-/* Hide ChatGPT premium upsell elements */
-.border-token-border-light,
-.upgrade-btn,
-.pro-upsell,
-.watermark,
-.rate-limit-message {
-  display: none !important;
-}
-
-/* Floating Action Button */
-#chatgpt-enhancer button {
+/* Base styles */
+.enhance-btn {
+  background-color: #10a37f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px 0;
+  cursor: pointer;
+  font-weight: 500;
   transition: all 0.2s ease;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-#chatgpt-enhancer button:hover {
-  transform: scale(1.1);
+.enhance-btn:hover {
+  background-color: #0d8a6a;
+  transform: translateY(-1px);
+}
+
+/* Input area enhancements */
+.textarea-container {
+  position: relative;
+}
+
+.enhancement-options {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.enhancement-option {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #f7f7f8;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+.enhancement-option:hover {
+  background: #e5e5e6;
+  transform: translateY(-1px);
 }
 
 /* Dark mode support */
-.dark #chatgpt-enhancer button {
-  background-color: #374151;
+.dark .enhance-btn {
+  background-color: #1a7f64;
 }
 
-.dark #chatgpt-enhancer button:hover {
-  background-color: #4b5563;
+.dark .enhance-btn:hover {
+  background-color: #166c54;
 }
 
-/* Animation for rate limit indicator */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+.dark .enhancement-option {
+  background: #3e3f4b;
+  color: #fff;
 }
 
-#rate-limit.warning {
-  animation: pulse 2s infinite;
+.dark .enhancement-option:hover {
+  background: #4e4f5b;
 }
 
-#rate-limit.critical {
-  animation: pulse 1s infinite;
-  background-color: #fee2e2;
-}
-
-.dark #rate-limit.critical {
-  background-color: #7f1d1d;
+/* Hide premium upsell elements */
+.upgrade-btn, .pro-upsell, .watermark {
+  display: none !important;
 }
