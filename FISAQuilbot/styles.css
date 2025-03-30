@@ -1,0 +1,55 @@
+/**
+ * ChatGPT Enhancer Styles
+ * UI enhancements for chat.openai.com
+ */
+
+/* Hide ChatGPT premium upsell elements */
+.border-token-border-light,
+.upgrade-btn,
+.pro-upsell,
+.watermark,
+.rate-limit-message {
+  display: none !important;
+}
+
+/* Floating Action Button */
+#chatgpt-enhancer button {
+  transition: all 0.2s ease;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#chatgpt-enhancer button:hover {
+  transform: scale(1.1);
+}
+
+/* Dark mode support */
+.dark #chatgpt-enhancer button {
+  background-color: #374151;
+}
+
+.dark #chatgpt-enhancer button:hover {
+  background-color: #4b5563;
+}
+
+/* Animation for rate limit indicator */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+#rate-limit.warning {
+  animation: pulse 2s infinite;
+}
+
+#rate-limit.critical {
+  animation: pulse 1s infinite;
+  background-color: #fee2e2;
+}
+
+.dark #rate-limit.critical {
+  background-color: #7f1d1d;
+}
