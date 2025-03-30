@@ -3,30 +3,29 @@
   "use strict";
 
   const chatHistory = [];
-  let rateLimit = {
-    remaining: 50,
-    limit: 50,
-    reset: Date.now() + 3600000 // 1 hour from now
+  const enhancementPresets = {
+    rewrite: "Improve this text while keeping the original meaning:",
+    summarize: "Summarize this text in key points:",
+    expand: "Expand on this idea with more details:"
   };
 
-  // Process chat messages
-  async function processChat(message) {
+  // Process enhancement requests
+  async function processEnhancement(message, preset) {
     try {
+      const enhancedText = await applyEnhancement(message, preset);
+      
       // Save to history
       chatHistory.push({
         timestamp: Date.now(),
-        message: message
+        original: message,
+        enhanced: enhancedText,
+        preset: preset
       });
-
-      // Update rate limit
-      if (rateLimit.remaining > 0) {
-        rateLimit.remaining--;
-      }
 
       return { 
         success: true,
-        history: chatHistory,
-        rateLimit: rateLimit
+        enhancedText,
+        history: chatHistory.slice(-10) // Return last 10 items
       };
     } catch (error) {
       return {
@@ -36,19 +35,23 @@
     }
   }
 
+  // Apply enhancement using AI
+  async function applyEnhancement(text, preset) {
+    // TODO: Implement actual enhancement logic
+    return `${enhancementPresets[preset]} ${text}`;
+  }
+
   // Message handler
   chrome = chrome ?? browser;
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch(request.type) {
       case 'chat-process':
-        processChat(request.message).then(sendResponse);
-        return true; // Required for async response
+        processEnhancement(request.message, request.preset)
+          .then(sendResponse);
+        return true;
       case 'get-history':
-        sendResponse({ history: chatHistory });
-        break;
-      case 'get-rate-limit':
-        sendResponse({ rateLimit });
-        break;
+        sendResponse({ history: chatHistory.slice(-10) });
+        return true;
       default:
         sendResponse({ 
           success: false,
@@ -56,13 +59,4 @@
         });
     }
   });
-
-  // Reset rate limit periodically
-  setInterval(() => {
-    rateLimit = {
-      remaining: 50,
-      limit: 50,
-      reset: Date.now() + 3600000
-    };
-  }, 3600000); // Every hour
 })();
