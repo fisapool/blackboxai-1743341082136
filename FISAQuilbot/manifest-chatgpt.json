@@ -1,37 +1,51 @@
 {
-  "name": "ChatGPT Enhancer",
-  "version": "1.0.0",
-  "description": "Enhances ChatGPT with additional features",
+  "name": "ChatGPT Enhancer Pro",
+  "version": "2.0.0",
+  "description": "Premium features for ChatGPT including dark mode, input enhancements, and usage tracking",
   "manifest_version": 3,
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
   },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
   "content_scripts": [{
     "matches": [
       "https://chat.openai.com/*",
-      "https://chatgpt.com/*"
+      "https://chatgpt.com/*",
+      "https://*.chatgpt.com/*"
     ],
     "js": ["inject.js"],
     "css": ["styles.css"],
     "run_at": "document_end"
   }],
   "web_accessible_resources": [{
-    "resources": ["quillbot.js"],
+    "resources": ["quillbot.js", "styles.css"],
     "matches": [
       "https://chat.openai.com/*",
-      "https://chatgpt.com/*"
+      "https://chatgpt.com/*",
+      "https://*.chatgpt.com/*"
     ]
   }],
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
     "https://chat.openai.com/*",
-    "https://chatgpt.com/*"
+    "https://chatgpt.com/*",
+    "https://*.chatgpt.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   }
 }
