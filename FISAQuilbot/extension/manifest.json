@@ -1,75 +1,35 @@
 {
-  "name": "FISAQuilbot Premium",
-  "version": "2.0.0",
-  "version_name": "2.0.0-beta",
-  "description": "Premium lifetime access to enhanced writing features. Transform your writing experience with FISAQuilbot's advanced capabilities.",
+  "name": "ChatGPT Enhancer",
+  "version": "1.0.0",
+  "description": "Enhances ChatGPT with additional features",
   "manifest_version": 3,
   "icons": {
-    "16": "icons/icon-16.png",
-    "48": "icons/icon-48.png",
-    "128": "icons/icon-128.png"
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
-  "action": {
-    "default_popup": "popup/popup.html",
-    "default_icon": {
-      "16": "icons/icon-16.png",
-      "48": "icons/icon-48.png",
-      "128": "icons/icon-128.png"
-    }
-  },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "scripts/quillbot.js",
-        "scripts/inject.js",
-        "styles/*.css"
-      ],
-      "matches": [
-        "https://quillbot.com/*",
-        "https://*.quillbot.com/*"
-      ],
-      "use_dynamic_url": true
-    }
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://quillbot.com/*",
-        "https://*.quillbot.com/*"
-      ],
-      "all_frames": false,
-      "match_about_blank": false,
-      "js": ["scripts/inject.js"],
-      "css": ["styles/content.css"],
-      "run_at": "document_start"
-    }
-  ],
-  "permissions": [
-    "scripting",
-    "storage"
-  ],
+  "content_scripts": [{
+    "matches": [
+      "https://chat.openai.com/*",
+      "https://chatgpt.com/*"
+    ],
+    "js": ["inject.js"],
+    "css": ["styles.css"],
+    "run_at": "document_end"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["quillbot.js"],
+    "matches": [
+      "https://chat.openai.com/*",
+      "https://chatgpt.com/*"
+    ]
+  }],
+  "permissions": ["storage"],
   "host_permissions": [
-    "https://quillbot.com/*",
-    "https://*.quillbot.com/*"
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*"
   ],
   "background": {
-    "service_worker": "scripts/background.js",
-    "type": "module"
-  },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
-    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-inline'"
-  },
-  "optional_permissions": [
-    "declarativeNetRequest",
-    "tabs"
-  ],
-  "declarative_net_request": {
-    "rule_resources": [{
-      "id": "resource_blocking",
-      "enabled": true,
-      "path": "rules/blocked_resources.json"
-    }]
+    "service_worker": "background.js"
   }
-}
 }
